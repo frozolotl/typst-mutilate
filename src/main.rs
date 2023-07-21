@@ -152,7 +152,11 @@ fn mutilate<W: Write>(
             write!(output, "{backticks}")?;
             Ok(())
         }
-        SyntaxKind::Link => mutilate_text(syntax.text(), context, output),
+        SyntaxKind::Link => {
+            let (scheme, rest) = syntax.text().split_once(':').unwrap();
+            write!(output, "{scheme}:")?;
+            mutilate_text(rest, context, output)
+        }
         SyntaxKind::ModuleInclude | SyntaxKind::ModuleImport => write_node(syntax, output),
         _ if syntax.children().next().is_some() => {
             for child in syntax.children() {
