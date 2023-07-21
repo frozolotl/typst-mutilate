@@ -17,14 +17,15 @@ By default, typst-mutilate replaces words with random characters.
 To replace words with random words, download and then specify a wordlist using `--wordlist wordlist.txt`. 
 
 ```
-Usage: typst-mutilate [--wordlist <wordlist>] [--language <language>] [--aggressive]
+Usage: typst-mutilate [-i <file>] [-w <wordlist>] [-l <language>] [-a]
 
 A tool to replace all words in a typst document with random garbage.
 
 Options:
-  --wordlist        the path to a line-separated wordlist
-  --language        an ISO 639-1 language code, like `de`
-  --aggressive      whether to replace elements that are more likely to change
+  -i, --in-place    a file to perform in-place replacement on
+  -w, --wordlist    the path to a line-separated wordlist
+  -l, --language    an ISO 639-1 language code, like `de`
+  -a, --aggressive  whether to replace elements that are more likely to change
                     behavior, like strings
   --help            display usage information
 ```

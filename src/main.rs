@@ -15,14 +15,17 @@ use typst_syntax::{ast, SyntaxKind, SyntaxNode};
 /// A tool to replace all words in a typst document with random garbage.
 #[derive(FromArgs)]
 struct Args {
+    /// a file to perform in-place replacement on
+    #[argh(option, short = 'i')]
+    in_place: Option<PathBuf>,
     /// the path to a line-separated wordlist
-    #[argh(option)]
+    #[argh(option, short = 'w')]
     wordlist: Option<PathBuf>,
     /// an ISO 639-1 language code, like `de`
-    #[argh(option, default = r#"String::from("en")"#)]
+    #[argh(option, short = 'l', default = r#"String::from("en")"#)]
     language: String,
     /// whether to replace elements that are more likely to change behavior, like strings
-    #[argh(switch)]
+    #[argh(switch, short = 'a')]
     aggressive: bool,
 }
 
@@ -30,7 +33,11 @@ fn main() -> io::Result<()> {
     let args: Args = argh::from_env();
 
     let mut code = String::new();
-    std::io::stdin().read_to_string(&mut code)?;
+    if let Some(path) = &args.in_place {
+        code = std::fs::read_to_string(path)?;
+    } else {
+        std::io::stdin().read_to_string(&mut code)?;
+    }
 
     let mut context = build_context(&args)?;
 
@@ -43,7 +50,11 @@ fn main() -> io::Result<()> {
 
     let mut output = Vec::new();
     mutilate(&syntax, &mut context, &mut output)?;
-    std::io::stdout().write_all(&output)?;
+    if let Some(path) = &args.in_place {
+        std::fs::write(path, &output)?;
+    } else {
+        std::io::stdout().write_all(&output)?;
+    }
 
     Ok(())
 }
