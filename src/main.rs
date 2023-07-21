@@ -10,7 +10,7 @@ use ecow::{EcoString, EcoVec};
 use hypher::Lang;
 use rand::{seq::SliceRandom, SeedableRng};
 use rand_xoshiro::Xoshiro256PlusPlus;
-use typst_syntax::{SyntaxKind, SyntaxNode};
+use typst_syntax::{ast, SyntaxKind, SyntaxNode};
 
 /// A tool to replace all words in a typst document with random garbage.
 #[derive(FromArgs)]
@@ -120,6 +120,25 @@ fn mutilate<W: Write>(
             let content = &syntax.text()[1..syntax.text().len() - 1];
             mutilate_text(content, context, output)?;
             write!(output, "\"")?;
+            Ok(())
+        }
+        SyntaxKind::Raw => {
+            let raw: ast::Raw = syntax.cast().unwrap();
+            let backticks = syntax.text().split(|c| c != '`').next().unwrap();
+            write!(output, "{backticks}")?;
+
+            let mut text = syntax
+                .text()
+                .trim_start_matches('`')
+                .strip_suffix(backticks)
+                .unwrap();
+            if let Some(lang) = raw.lang() {
+                text = text.strip_prefix(lang).unwrap();
+                write!(output, "{lang}")?;
+            }
+
+            mutilate_text(text, context, output)?;
+            write!(output, "{backticks}")?;
             Ok(())
         }
         SyntaxKind::ModuleInclude | SyntaxKind::ModuleImport => write_node(syntax, output),
