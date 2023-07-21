@@ -9,7 +9,7 @@ These sample documents could be used for testing and benchmarking, for instance.
 
 ## Installation
 ```sh
-cargo install --release
+cargo install --path .
 ```
 
 ## Usage
