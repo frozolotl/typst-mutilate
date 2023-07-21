@@ -210,8 +210,10 @@ const CHARSET_DIGITS: &[char] = &['0', '1', '2', '3', '4', '5', '6', '7', '8', '
 fn mutilate_word<W: Write>(word: &str, context: &mut Context, output: &mut W) -> io::Result<()> {
     let length = word.chars().count();
     if word.chars().all(|c| c.is_numeric()) {
-        let digit = CHARSET_DIGITS.choose(&mut context.rng).unwrap();
-        write!(output, "{digit}")?;
+        for _ in 0..length {
+            let digit = CHARSET_DIGITS.choose(&mut context.rng).unwrap();
+            write!(output, "{digit}")?;
+        }
         return Ok(());
     }
 
