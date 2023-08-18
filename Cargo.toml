@@ -5,9 +5,9 @@ edition = "2021"
 authors = ["frozolotl <frozolotl@protonmail.com>"]
 
 [dependencies]
-hypher = { git = "https://github.com/typst/hypher", rev = "1c47e88ded258bd04029d5a043aa5d335223c28c" }
-typst-syntax = { git = "https://github.com/typst/typst", rev = "51a21403ba2e8ced2aeb6a80996d9247f0b7ffd0" }
-rand_xoshiro = "0.6.0"
-rand = "0.8.5"
-argh = "0.1.10"
+argh = "0.1.12"
 ecow = "0.1.1"
+hypher = "0.1.2"
+rand = "0.8.5"
+rand_xoshiro = "0.6.0"
+typst-syntax = { git = "https://github.com/typst/typst", rev = "2f81089995c87efdbce6c94bb29647cd1f213cfd" }
