@@ -10,4 +10,4 @@ ecow = "0.1.1"
 hypher = "0.1.2"
 rand = "0.8.5"
 rand_xoshiro = "0.6.0"
-typst-syntax = { git = "https://github.com/typst/typst", rev = "2f81089995c87efdbce6c94bb29647cd1f213cfd" }
+typst-syntax = { git = "https://github.com/typst/typst", tag = "v0.10.0" }
