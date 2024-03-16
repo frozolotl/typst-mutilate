@@ -144,8 +144,9 @@ fn mutilate<W: Write>(
                 .strip_suffix(backticks)
                 .unwrap();
             if let Some(lang) = raw.lang() {
+                let lang = lang.get().as_str();
                 text = text.strip_prefix(lang).unwrap();
-                write!(output, "{lang}")?;
+                write!(output, "{}", lang)?;
             }
 
             mutilate_text(text, context, output)?;

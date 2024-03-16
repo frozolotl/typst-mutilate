@@ -6,8 +6,8 @@ authors = ["frozolotl <frozolotl@protonmail.com>"]
 
 [dependencies]
 argh = "0.1.12"
-ecow = "0.1.1"
-hypher = "0.1.2"
+ecow = "0.2.1"
+hypher = "0.1.5"
 rand = "0.8.5"
 rand_xoshiro = "0.6.0"
-typst-syntax = { git = "https://github.com/typst/typst", tag = "v0.10.0" }
+typst-syntax = "0.11.0"
