@@ -135,11 +135,11 @@ fn mutilate<W: Write>(
         }
         SyntaxKind::Raw => {
             let raw: ast::Raw = syntax.cast().unwrap();
-            let backticks = syntax.text().split(|c| c != '`').next().unwrap();
+            let raw_text = syntax.clone().into_text();
+            let backticks = raw_text.split(|c| c != '`').next().unwrap();
             write!(output, "{backticks}")?;
 
-            let mut text = syntax
-                .text()
+            let mut text = raw_text
                 .trim_start_matches('`')
                 .strip_suffix(backticks)
                 .unwrap();
